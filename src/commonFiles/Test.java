@@ -19,7 +19,7 @@ public class Test {
 		NCBST<Integer> tree = new NCBST<Integer>();
 		
 		//balanced
-	tree.insert(10);
+//		tree.insert(10);
 //		tree.insert(5);
 //		tree.insert(15);
 //		tree.insert(3);
