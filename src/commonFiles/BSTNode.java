@@ -1,37 +1,37 @@
 package commonFiles;
 
-public class BSTNode<K> {
+public class BSTNode<E> {
 	
-	private K key;
-	private BSTNode<K> left, right;
+	private E key;
+	private BSTNode<E> left, right;
 	
-	public BSTNode(K key, BSTNode<K> left, BSTNode<K> right){
+	public BSTNode(E key, BSTNode<E> left, BSTNode<E> right){
 		this.key = key;
 		this.left = left;
 		this.right = right;
 	}
 	
-	public K getKey(){
+	public E getKey(){
 		return key;
 	}
 	
-	public BSTNode<K> getLeft(){
+	public BSTNode<E> getLeft(){
 		return left;
 	}
 	
-	public BSTNode<K> getRight(){
+	public BSTNode<E> getRight(){
 		return right;
 	}
 	
-	public void setKey(K newK) {
+	public void setKey(E newK) {
 		key = newK;
 	}
 	
-	public void setLeft(BSTNode<K> newL){
+	public void setLeft(BSTNode<E> newL){
 		left = newL;
 	}
 	
-	public void setRight(BSTNode<K> newR){
+	public void setRight(BSTNode<E> newR){
 		right = newR;
 	}
 

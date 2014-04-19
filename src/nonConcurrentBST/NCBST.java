@@ -2,35 +2,37 @@ package nonConcurrentBST;
 
 import commonFiles.BSTNode;
 
-public class NCBST<K extends Comparable<K>> {
+public class NCBST<E extends Comparable<E>> {
 	
-	private BSTNode<K> root;
+	private BSTNode<E> root;
 	
 	public NCBST(){
 		root = null;
 	}
 	
-	public BSTNode<K> getRoot() {
+	public BSTNode<E> getRoot() {
 		return root;
 	}
 
-	public void setRoot(BSTNode<K> root) {
+	public void setRoot(BSTNode<E> root) {
 		this.root = root;
 	}
 
-	public void insert(K key){
+	public void insert(E key){
 		root = insert(root, key);
 	}
 	
-	private BSTNode<K> insert(BSTNode<K> n, K key) {
+	private BSTNode<E> insert(BSTNode<E> n, E key) {
 	    if (n == null) {
-	        return new BSTNode<K>(key, null, null);
+	        return new BSTNode<E>(key, null, null);
 	    }
 	     
-//	    if (n.getKey().equals(key)) {
-//	        System.out.println("Duplicate key");
-//	        return null;
-//	    }
+	    if (n.getKey().equals(key)) {
+	    	n.setLeft( insert(n.getLeft(), key) );
+	        return n;
+	        //System.out.println("Duplicate key");
+	        //return null;
+	    }
 	    
 	    if (key.compareTo(n.getKey()) < 0) {
 	        n.setLeft( insert(n.getLeft(), key) );
@@ -43,11 +45,11 @@ public class NCBST<K extends Comparable<K>> {
 	    }
 	}
 	
-	public void delete(K key){
+	public void delete(E key){
 		root = delete(root, key);
 	}
 	
-	private BSTNode<K> delete(BSTNode<K> n, K key) {
+	private BSTNode<E> delete(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return null;
 	    }
@@ -64,7 +66,7 @@ public class NCBST<K extends Comparable<K>> {
 	            return n.getLeft();
 	        }
 	       
-	        K smallVal = smallest(n.getRight());
+	        E smallVal = smallest(n.getRight());
 	        n.setKey(smallVal);
 	        n.setRight( delete(n.getRight(), smallVal) );
 	        return n; 
@@ -81,11 +83,11 @@ public class NCBST<K extends Comparable<K>> {
 	    }
 	}
 	
-	public boolean lookup(K key){
+	public boolean lookup(E key){
 		return lookup(root, key);		
 	}
 	
-	private boolean lookup(BSTNode<K> n, K key){
+	private boolean lookup(BSTNode<E> n, E key){
 		if(n == null){
 			return false;
 		}
@@ -103,12 +105,7 @@ public class NCBST<K extends Comparable<K>> {
 		}
 	}
 	
-	public int[] search(K key){
-		return null;
-		
-	}
-	
-	public void traversal(BSTNode<K> root){
+	public void traversal(BSTNode<E> root){
 
 		if(null == root){
 			return;
@@ -118,7 +115,7 @@ public class NCBST<K extends Comparable<K>> {
 		traversal(root.getRight());
 	}
 	
-	private K smallest(BSTNode<K> n){
+	private E smallest(BSTNode<E> n){
 		
 	    if (n.getLeft() == null) {
 	        return n.getKey();
