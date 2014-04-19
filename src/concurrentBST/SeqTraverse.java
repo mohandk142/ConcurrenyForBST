@@ -6,11 +6,11 @@ import commonFiles.*;
 
 public class SeqTraverse implements Runnable{
 	
-	BSTNode<Integer> root;
-	ArrayList<Integer> traverseArr;
+	BSTNode<Object> root;
+	ArrayList<Object> traverseArr;
 
 	
-	public SeqTraverse(BSTNode<Integer> root, ArrayList<Integer> traverseArr){
+	public SeqTraverse(BSTNode<Object> root, ArrayList<Object> traverseArr){
 		this.root = root;
 		this.traverseArr = traverseArr;
 	}

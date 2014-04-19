@@ -15,7 +15,7 @@ public class ParallelDepthFirstSearch {
 
 	int numProcs = Runtime.getRuntime().availableProcessors(); 
 
-	public static void sequentialTraverse(BSTNode<Integer> root, ArrayList<Integer> traverseArr){
+	public static void sequentialTraverse(BSTNode<Object> root, ArrayList<Object> traverseArr){
 
 		if(null == root){
 			return;
@@ -81,7 +81,7 @@ public class ParallelDepthFirstSearch {
 		}
 	}
 	
-	public void printDFT(ArrayList<ArrayList<Integer>> arr){
+	public void printDFT(ArrayList<ArrayList<Object>> arr){
 		
 		int i = 0;
 		
@@ -109,9 +109,9 @@ public class ParallelDepthFirstSearch {
 		
 	}
 	
-	public void ConcurrentTraverse(BSTNode<Integer> root){
+	public void ConcurrentTraverse(BSTNode<Object> root){
 		if(numProcs < 2){
-			ArrayList<Integer> traverseArr = new ArrayList<Integer>(1);
+			ArrayList<Object> traverseArr = new ArrayList<Object>(1);
 			sequentialTraverse(root, traverseArr);
 			for(int j = 0; j<traverseArr.size(); j++){
 				System.out.print(traverseArr.get(j) + "\t");
@@ -126,12 +126,12 @@ public class ParallelDepthFirstSearch {
 
 			prepareQueue(n);	
 
-			ArrayList<ArrayList<Integer>> arr = new ArrayList<ArrayList<Integer>>();
+			ArrayList<ArrayList<Object>> arr = new ArrayList<ArrayList<Object>>();
 			ArrayList<Thread> DFTThreads = new ArrayList<Thread>();
 			int i = 0;
 
 			while(!childQueue.isEmpty()){
-				ArrayList<Integer> traverseArr = new ArrayList<Integer>(1);
+				ArrayList<Object> traverseArr = new ArrayList<Object>(1);
 				arr.add(i, traverseArr);
 				DFTThreads.add(new Thread(new SeqTraverse(childQueue.element().getNode(), arr.get(i))));
 				DFTThreads.get(i).start();

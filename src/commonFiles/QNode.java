@@ -2,10 +2,10 @@ package commonFiles;
 
 public class QNode {
 	
-	private BSTNode<Integer> node;
+	private BSTNode<Object> node;
 	private int availableProcs;
 	
-	public QNode(BSTNode<Integer> node, int availableProcs){
+	public QNode(BSTNode<Object> node, int availableProcs){
 		this.node = node;
 		this.availableProcs = availableProcs;
 	}
@@ -14,11 +14,11 @@ public class QNode {
 		return availableProcs;
 	}
 	
-	public BSTNode<Integer> getNode(){
+	public BSTNode<Object> getNode(){
 		return node;
 	}
 	
-	public void setNode(BSTNode<Integer> newNode){
+	public void setNode(BSTNode<Object> newNode){
 		node = newNode;
 	}
 	
