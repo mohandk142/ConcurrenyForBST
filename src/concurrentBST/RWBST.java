@@ -5,9 +5,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import commonFiles.BSTNode;
 
-public class RWBST<K extends Comparable<K>> {
+public class RWBST<E extends Comparable<E>> {
 	
-	private BSTNode<K> root;
+	private BSTNode<E> root;
 	
 	private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 	private final Lock read  = readWriteLock.readLock();
@@ -17,7 +17,7 @@ public class RWBST<K extends Comparable<K>> {
 		root = null;
 	}
 	
-	public void insert(K key){
+	public void insert(E key){
 		write.lock();
 		try{
 			root = insert(root, key);
@@ -28,9 +28,9 @@ public class RWBST<K extends Comparable<K>> {
 		}		
 	}
 	
-	private BSTNode<K> insert(BSTNode<K> n, K key) {
+	private BSTNode<E> insert(BSTNode<E> n, E key) {
 	    if (n == null) {
-	        return new BSTNode<K>(key, null, null);
+	        return new BSTNode<E>(key, null, null);
 	    }
 	     
 	    if (n.getKey().equals(key)) {
@@ -49,7 +49,7 @@ public class RWBST<K extends Comparable<K>> {
 	    }
 	}
 	
-	public void delete(K key){
+	public void delete(E key){
 		write.lock();
 		try{
 			root = delete(root, key);
@@ -60,7 +60,7 @@ public class RWBST<K extends Comparable<K>> {
 		}			
 	}
 	
-	private BSTNode<K> delete(BSTNode<K> n, K key) {
+	private BSTNode<E> delete(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return null;
 	    }
@@ -77,7 +77,7 @@ public class RWBST<K extends Comparable<K>> {
 	            return n.getLeft();
 	        }
 	       
-	        K smallVal = smallest(n.getRight());
+	        E smallVal = smallest(n.getRight());
 	        n.setKey(smallVal);
 	        n.setRight( delete(n.getRight(), smallVal) );
 	        return n; 
@@ -94,7 +94,7 @@ public class RWBST<K extends Comparable<K>> {
 	    }
 	}
 	
-	public boolean lookup(K key){
+	public boolean lookup(E key){
 		
 		boolean var = false;
 		read.lock();
@@ -103,12 +103,12 @@ public class RWBST<K extends Comparable<K>> {
 		} catch(Exception e){
 			//todo -- introduce reqd exception
 		} finally{
-			write.unlock();
+			read.unlock();
 		}	
 		return var;
 	}
 	
-	private boolean lookup(BSTNode<K> n, K key){
+	private boolean lookup(BSTNode<E> n, E key){
 		if(n == null){
 			return false;
 		}
@@ -126,19 +126,7 @@ public class RWBST<K extends Comparable<K>> {
 		}
 	}
 	
-	public int[] search(K key){
-		//same as lookup function. But returns the parent/position/adjacent nodes (whatever we may decide)
-		//use read lock
-		return null;
-	}
-	
-	public int[] traversal(){
-		//use read lock
-		return null;
-		
-	}
-	
-	private K smallest(BSTNode<K> n){
+	private E smallest(BSTNode<E> n){
 		
 	    if (n.getLeft() == null) {
 	        return n.getKey();

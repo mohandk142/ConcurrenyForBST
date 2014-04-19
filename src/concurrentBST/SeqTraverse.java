@@ -17,7 +17,7 @@ public class SeqTraverse implements Runnable{
 
 	@Override
 	public void run() {
-		ConcurrentDepthFirstBST.sequentialTraverse(root, traverseArr);
+		ParallelDepthFirstSearch.sequentialTraverse(root, traverseArr);
 	}
 
 }
