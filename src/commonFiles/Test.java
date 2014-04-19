@@ -40,7 +40,7 @@ public class Test {
 		ParallelDepthFirstSearch con= new ParallelDepthFirstSearch();
 		
 		//balanced
-	tree.insert(10);
+//		tree.insert(10);
 //		tree.insert(5);
 //		tree.insert(15);
 //		tree.insert(3);
