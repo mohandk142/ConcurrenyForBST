@@ -1,6 +1,6 @@
 import commonFiles.BSTNode;
 
-import concurrentBST.ConcurrentDepthFirstBST;
+import concurrentBST.ParallelDepthFirstSearch;
 import nonConcurrentBST.NCBST;
 
 
@@ -14,7 +14,7 @@ public class TestDriver {
 	}
 
 	private static void TestConcurrentDFBST() {
-		ConcurrentDepthFirstBST con= new ConcurrentDepthFirstBST();
+		ParallelDepthFirstSearch con= new ParallelDepthFirstSearch();
 		final int maxRange = 50;
 		final int minRange = 1;
 		BSTNode<Integer> one = new BSTNode<Integer>(minRange, null, null);

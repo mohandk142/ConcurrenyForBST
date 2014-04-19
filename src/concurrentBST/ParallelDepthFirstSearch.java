@@ -148,7 +148,7 @@ public class ParallelDepthFirstSearch {
 				}
 
 			}			
-			printDFT(arr);
+			//printDFT(arr);
 		}	
 	}
 }
