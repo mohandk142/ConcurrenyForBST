@@ -1,13 +1,16 @@
 package commonFiles;
+import java.util.ArrayList;
+
 import concurrentBST.*;
 import nonConcurrentBST.*;
 
 public class Test {
 
 	public static void main(String[] args) {
-		final int maxRange = 500;
+		final int maxRange = 50000;
 		final int minRange = 1;
 		NCBST<Integer> tree = new NCBST<Integer>();
+
 		// balanced
 //		tree.insert(10);
 //		tree.insert(5);
@@ -26,9 +29,10 @@ public class Test {
 //		tree.insert(18);
 		
 		// random
+		int [] randomArray = new int[maxRange-minRange];
 		for(int i=0;i<maxRange-minRange;i++){
-			int ran = 1+(int)(Math.random()*maxRange);
-			tree.insert(ran);
+			randomArray[i] = 1+(int)(Math.random()*maxRange);
+			tree.insert(randomArray[i]);
 		}
 		
 		TestNonConcurrentBST(tree);
@@ -91,7 +95,8 @@ public class Test {
 	private static void TestNonConcurrentBST(NCBST<Integer> tree) {
 		long endTime = 0;
 		long startTime = System.currentTimeMillis();
-		tree.traversal(tree.getRoot());
+//		tree.traversal(tree.getRoot());
+		ParallelDepthFirstSearch.sequentialTraverse(tree.getRoot(), new ArrayList<Integer>(1));
 		endTime = System.currentTimeMillis();
 		System.out.println("Non-Concurrent traverse time: "+(endTime-startTime));
 	}
