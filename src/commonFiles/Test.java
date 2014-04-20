@@ -7,7 +7,7 @@ import nonConcurrentBST.*;
 public class Test {
 
 	public static void main(String[] args) {
-		final int maxRange = 50000;
+		final int maxRange = 50;
 		final int minRange = 1;
 		NCBST<Integer> tree = new NCBST<Integer>();
 

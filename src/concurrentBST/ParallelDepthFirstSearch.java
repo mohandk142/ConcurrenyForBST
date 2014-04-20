@@ -15,7 +15,7 @@ public class ParallelDepthFirstSearch {
 
 	int numProcs = Runtime.getRuntime().availableProcessors(); 
 
-	public static void sequentialTraverse(BSTNode<Object> root, ArrayList<Object> traverseArr){
+	public static void sequentialTraverse(BSTNode root, ArrayList traverseArr){
 
 		if(null == root){
 			return;
@@ -119,7 +119,7 @@ public class ParallelDepthFirstSearch {
 		if(numProcs < 2){
 			ArrayList<Object> traverseArr = new ArrayList<Object>(1);
 			sequentialTraverse(root, traverseArr);
-			printSeqDFT(traverseArr);
+			//printSeqDFT(traverseArr);
 		}
 
 		else{
@@ -152,7 +152,7 @@ public class ParallelDepthFirstSearch {
 				}
 
 			}			
-			printDFT(arr);
+			//printDFT(arr);
 		}	
 	}
 }
