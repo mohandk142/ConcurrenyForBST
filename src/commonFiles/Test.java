@@ -7,7 +7,7 @@ import nonConcurrentBST.*;
 public class Test {
 
 	public static void main(String[] args) {
-		final int maxRange = 5000;
+		final int maxRange = Integer.parseInt(args[0])+1;
 		final int minRange = 1;
 		//NonConcurrentBST<Integer> tree = new NonConcurrentBST<Integer>();
 
@@ -31,7 +31,7 @@ public class Test {
 		
 /**************************************** Operations test ***************************************************/
 				
-		int NUM_THREADS = 10;
+		int NUM_THREADS = Runtime.getRuntime().availableProcessors();
 		long start, end;
 		int totalNumber = maxRange-minRange;
 		System.out.println("total number "+totalNumber);

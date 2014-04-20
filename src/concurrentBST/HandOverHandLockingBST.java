@@ -49,7 +49,7 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 //					currentNode.unlock();
 //					return false;
 				}
-
+				
 				if(currentNode == null) {
 					break;
 				} else {
@@ -57,7 +57,6 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 					parentNode.unlock();
 				}
 			}
-
 			//Insert the node into the tree
 			if(compare > 0)
 				parentNode.setLeft(newNode);
