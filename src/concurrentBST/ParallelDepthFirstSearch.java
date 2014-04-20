@@ -109,7 +109,7 @@ public class ParallelDepthFirstSearch {
 		
 	}
 	
-	public void ConcurrentTraverse(BSTNode<Object> root){
+	public void ConcurrentTraverse(BSTNode root){
 		if(numProcs < 2){
 			ArrayList<Object> traverseArr = new ArrayList<Object>(1);
 			sequentialTraverse(root, traverseArr);
