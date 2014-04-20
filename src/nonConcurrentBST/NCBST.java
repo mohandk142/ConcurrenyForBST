@@ -111,7 +111,7 @@ public class NCBST<E extends Comparable<E>> {
 			return;
 		}	
 		traversal(root.getLeft());
-//		System.out.println(root.getKey());
+		System.out.println(root.getKey());
 		traversal(root.getRight());
 	}
 	
