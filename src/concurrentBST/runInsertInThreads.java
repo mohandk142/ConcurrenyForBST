@@ -1,33 +1,33 @@
 package concurrentBST;
 
+import java.util.ArrayList;
+
 public class runInsertInThreads implements Runnable{
 	
-	int[] randomArr;
+	ArrayList<Integer> arr = new ArrayList<>();
 	ReadWriteBST<Integer> rwTree;
 	HandOverHandLockingBST<Integer> HOHTree;
 	CopyOnWriteBST<Integer> COWTree;
-	int end, start;
+
 	
-	public runInsertInThreads(int[] randomArr, ReadWriteBST<Integer>rwTree, HandOverHandLockingBST<Integer> HOHTree, CopyOnWriteBST<Integer> COWTree, int end, int i) {
-		this.end = end;
-		this.start = i;
-		this.randomArr = randomArr;
-		this.rwTree = rwTree;
+	public runInsertInThreads(ArrayList arr, CopyOnWriteBST COWTree, HandOverHandLockingBST HOHTree, ReadWriteBST rwTree) {
+		this.arr = arr;
 		this.COWTree = COWTree;
 		this.HOHTree = HOHTree;
+		this.rwTree = rwTree;
 	}	
 	
 	public void run(){
-		for(int j=0;j<end;j++){
+		
+		for(int i = 0; i<arr.size(); i++){
 			
 			if(rwTree != null)
-				rwTree.insert(randomArr[(start*end)+j]);
+				rwTree.insert(arr.get(i));
 			if(COWTree != null)
-				COWTree.insert(randomArr[(start*end)+j]);
+				COWTree.insert(arr.get(i));
 			if(HOHTree != null)
-				HOHTree.insert(randomArr[(start*end)+j]);
+				HOHTree.insert(arr.get(i));
 		}
-		
 	}
 
 }

@@ -7,7 +7,7 @@ import nonConcurrentBST.*;
 public class Test {
 
 	public static void main(String[] args) {
-		final int maxRange = 5000;
+		final int maxRange = 5;
 		final int minRange = 1;
 		NonConcurrentBST<Integer> tree = new NonConcurrentBST<Integer>();
 
@@ -32,67 +32,87 @@ public class Test {
 /**************************************** Operations test ***************************************************/
 				
 		int NUM_THREADS = 10;
+		long start, end;
 		int totalNumber = maxRange-minRange;
+		System.out.println("total number "+totalNumber);
 		int [] randomArr = new int[maxRange-minRange];
-		for(int i=0;i<maxRange-minRange;i++){
-			randomArr[i] = 1+(int)(Math.random()*maxRange);
+		//int [] randomArr = new int[5];
+//		for(int i=0;i<maxRange-minRange;i++){
+//			randomArr[i] = 1+(int)(Math.random()*maxRange);
+//		}
+		ArrayList<ArrayList> buckets = new ArrayList<ArrayList>(NUM_THREADS);
+		for(int i=0;i<NUM_THREADS;i++)
+			buckets.add(new ArrayList());
+		for(int i=0,j=0;i<randomArr.length;i++){
+			buckets.get(i%NUM_THREADS).add(minRange+(int)(Math.random()*maxRange));
 		}
 		
-		NonConcurrentBST<Integer> ncbst = new NonConcurrentBST<>();
-		long start = System.currentTimeMillis();
-		for(int i:randomArr){
-			ncbst.insert(i);
-		}
-		long end = System.currentTimeMillis();
-		System.out.println("NCBST insert time: "+(end-start));
+//		for(int i=0;i<5;i++){
+//			System.out.println(randomArr[i]);
+//		}
+//		
 		
-		ReadWriteBST<Integer> rwTree = new ReadWriteBST<>();
-		Thread[] insertThreadsForRWBST = new Thread[NUM_THREADS];
+//		NonConcurrentBST<Integer> ncbst = new NonConcurrentBST<>();
+//		start = System.currentTimeMillis();
+//		for(int i = 0; i<randomArr.length; i++){
+//			ncbst.insert(randomArr[i]);
+//		}
+//		System.out.println("NCBST traversal");
+//		ncbst.traversal(ncbst.getRoot());
+//		end = System.currentTimeMillis();
+//		System.out.println("NCBST insert time: "+(end-start));
 		
-		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForRWBST[i] = new Thread(new runInsertInThreads(randomArr, rwTree, null, null, totalNumber/NUM_THREADS, i));
-		}
+//		ReadWriteBST<Integer> rwTree = new ReadWriteBST<>();
+//		Thread[] insertThreadsForRWBST = new Thread[NUM_THREADS];
+//		//int offset = (int)Math.ceil(totalNumber/NUM_THREADS);
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForRWBST[i] = new Thread(new runInsertInThreads(buckets.get(i), null, null, rwTree));
+//		}
+//		
+//		start = System.currentTimeMillis();
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForRWBST[i].start();
+//		}
+//		for(int i=0;i<NUM_THREADS;i++){
+//			try {
+//				insertThreadsForRWBST[i].join();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println("RWBST traversal");
+//		rwTree.traversal(rwTree.getRoot());
+//		end = System.currentTimeMillis();
+//		System.out.println("RWBST insert time: "+(end-start));
 		
-		start = System.currentTimeMillis();
-		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForRWBST[i].start();
-		}
-		for(int i=0;i<NUM_THREADS;i++){
-			try {
-				insertThreadsForRWBST[i].join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		end = System.currentTimeMillis();
-		System.out.println("RWBST insert time: "+(end-start));
-		
-		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<>();
-		Thread[] insertThreadsForHOHBST = new Thread[NUM_THREADS];
-		
-		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForHOHBST[i] = new Thread(new runInsertInThreads(randomArr, null, HOHTree, null, totalNumber/NUM_THREADS, i));
-		}
-		start = System.currentTimeMillis();
-		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForHOHBST[i].start();
-		}
-		for(int i=0;i<NUM_THREADS;i++){
-			try {
-				insertThreadsForHOHBST[i].join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		end = System.currentTimeMillis();
-		System.out.println("HOH insert time: "+(end-start));
-		
-
+//		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<>();
+//		Thread[] insertThreadsForHOHBST = new Thread[NUM_THREADS];
+//		
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForHOHBST[i] = new Thread(new runInsertInThreads(buckets.get(i), null, HOHTree, null));
+//		}
+//		start = System.currentTimeMillis();
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForHOHBST[i].start();
+//		}
+//		for(int i=0;i<NUM_THREADS;i++){
+//			try {
+//				insertThreadsForHOHBST[i].join();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println("HOH traversal");
+//		HOHTree.traversal(HOHTree.getRoot());
+//		end = System.currentTimeMillis();
+//		System.out.println("HOH insert time: "+(end-start));
+//		
+//
 		CopyOnWriteBST<Integer> COWTree = new CopyOnWriteBST<>();
 		Thread[] insertThreadsForCOW = new Thread[NUM_THREADS];
 		
 		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(randomArr, null, null, COWTree, totalNumber/NUM_THREADS, i));
+			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(buckets.get(i), COWTree, null, null));
 		}
 		start = System.currentTimeMillis();
 		for(int i=0;i<NUM_THREADS;i++){
@@ -105,6 +125,8 @@ public class Test {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("COW traversal");
+		COWTree.traversal(COWTree.getRoot());
 		end = System.currentTimeMillis();
 		System.out.println("COW insert time: "+(end-start));
 		
@@ -113,14 +135,17 @@ public class Test {
 		
 /**************************************** DFT Performance Test **********************************************/
 		// random
-		int [] randomArray = new int[maxRange-minRange];
-		for(int i=0;i<maxRange-minRange;i++){
-			randomArray[i] = 1+(int)(Math.random()*maxRange);
-			tree.insert(randomArray[i]);
-		}
+//		for(int i=0;i<maxRange-minRange;i++){
+//			randomArr[i] = 1+(int)(Math.random()*maxRange);
+//			tree.insert(randomArr[i]);
+//		}
 		
-		TestNonConcurrentBST(tree);
-		TestConcurrentDFBST(tree);
+//		for(int i=0;i<5;i++){
+//			tree.insert(randomArr[i]);
+//		}
+//		
+//		TestNonConcurrentBST(tree);
+//		TestConcurrentDFBST(tree);
 		
 	}
 

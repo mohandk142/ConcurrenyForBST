@@ -70,28 +70,31 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 	}
 
 	public BSTNode<E> insert(E key) {
-		return insert(bst, key);
+		
+		return insert(CopyTree(bst), key);
 	}
 
-	private synchronized BSTNode<E> insert(BSTNode<E> root, E key) {
-		if (root == null) {
-			return new BSTNode<E>(key, null, null);
-		}
-		BSTNode<E> copyOfTree = CopyTree(root);
-		if (copyOfTree.getKey().equals(key)) {
-			copyOfTree.setLeft(insert(copyOfTree.getLeft(), key));
-			return copyOfTree;
-		}
-
-		if (key.compareTo(copyOfTree.getKey()) < 0) {
-			copyOfTree.setLeft(insert(copyOfTree.getLeft(), key));
-			return copyOfTree;
-		}
-
-		else {
-			copyOfTree.setRight(insert(copyOfTree.getRight(), key));
-			return copyOfTree;
-		}
+	private BSTNode<E> insert(BSTNode<E> n, E key) {
+	    if (n == null) {
+	        return new BSTNode<E>(key, null, null);
+	    }
+	     
+	    if (n.getKey().equals(key)) {
+	    	n.setLeft( insert(n.getLeft(), key) );
+	        return n;
+	        //System.out.println("Duplicate key");
+	        //return null;
+	    }
+	    
+	    if (key.compareTo(n.getKey()) < 0) {
+	        n.setLeft( insert(n.getLeft(), key) );
+	        return n;
+	    }
+	    
+	    else {
+	        n.setRight( insert(n.getRight(), key) );
+	        return n;
+	    }
 	}
 
 	public BSTNode<E> delete(E key) {

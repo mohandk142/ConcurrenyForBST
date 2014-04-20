@@ -9,6 +9,14 @@ public class ReadWriteBST<E extends Comparable<E>> {
 	
 	private BSTNode<E> root;
 	
+	public BSTNode<E> getRoot() {
+		return root;
+	}
+
+	public void setRoot(BSTNode<E> root) {
+		this.root = root;
+	}
+
 	private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 	private final Lock read  = readWriteLock.readLock();
 	private final Lock write = readWriteLock.writeLock();

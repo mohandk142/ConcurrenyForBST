@@ -30,8 +30,8 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 	    if (n.getKey().equals(key)) {
 	    	n.setLeft( insert(n.getLeft(), key) );
 	        return n;
-	        //System.out.println("Duplicate key");
-	        //return null;
+//	        System.out.println("Duplicate key");
+//	        return null;
 	    }
 	    
 	    if (key.compareTo(n.getKey()) < 0) {

@@ -8,6 +8,14 @@ import commonFiles.BSTNode;
 public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 
 	BSTLockNode<E> root;
+	public BSTLockNode<E> getRoot() {
+		return root;
+	}
+
+	public void setRoot(BSTLockNode<E> root) {
+		this.root = root;
+	}
+
 	ReentrantLock headLock;
 
 	public HandOverHandLockingBST() {
