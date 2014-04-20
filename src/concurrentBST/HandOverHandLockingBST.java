@@ -3,6 +3,7 @@ package concurrentBST;
 import java.util.concurrent.locks.ReentrantLock;
 
 import commonFiles.BSTLockNode;
+import commonFiles.BSTNode;
 
 public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 
@@ -181,6 +182,16 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 		//The specified data was not in the tree
 		parentNode.unlock();
 		return null;
+	}
+	
+	public void traversal(BSTLockNode<E> root){
+
+		if(null == root){
+			return;
+		}	
+		traversal(root.getLeft());
+		System.out.println(root.getKey());
+		traversal(root.getRight());
 	}
 
 	private BSTLockNode<E> findReplacement(BSTLockNode<E> subRoot) {

@@ -12,6 +12,7 @@ public class BSTLockNode<E> {
 		this.key = key;
 		this.left = left;
 		this.right = right;
+		this.lock = new ReentrantLock();
 	}
 	
 	public E getKey(){

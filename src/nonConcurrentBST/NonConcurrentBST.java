@@ -2,11 +2,11 @@ package nonConcurrentBST;
 
 import commonFiles.BSTNode;
 
-public class NCBST<E extends Comparable<E>> {
+public class NonConcurrentBST<E extends Comparable<E>> {
 	
 	private BSTNode<E> root;
 	
-	public NCBST(){
+	public NonConcurrentBST(){
 		root = null;
 	}
 	

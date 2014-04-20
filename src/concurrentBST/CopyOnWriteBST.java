@@ -11,7 +11,6 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 	private final BSTNode<E> bst;
 
 	public CopyOnWriteBST() {
-
 		bst = null;
 
 	}
@@ -23,7 +22,6 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 	}
 
 	public CopyOnWriteBST(Object E) {
-
 		bst = new BSTNode(E);
 	}
 
@@ -50,7 +48,6 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 				q.add(curr.getLeft());
 			}
 			if (curr.getRight() != null) {
-
 				q.add(curr.getRight());
 			}
 
@@ -59,7 +56,6 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 		q.add(root);
 		while (!q.isEmpty()) {
 			curr = q.remove();
-
 			copyNode = hm.get(curr);
 			copyNode.setLeft(hm.get(curr.getLeft()));
 			copyNode.setRight(hm.get(curr.getRight()));
@@ -67,21 +63,17 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 				q.add(curr.getLeft());
 			}
 			if (curr.getRight() != null) {
-
 				q.add(curr.getRight());
 			}
-
 		}
-
-		return newRoot;
-
+		return hm.get(root);
 	}
 
 	public BSTNode<E> insert(E key) {
 		return insert(bst, key);
 	}
 
-	private BSTNode<E> insert(BSTNode<E> root, E key) {
+	private synchronized BSTNode<E> insert(BSTNode<E> root, E key) {
 		if (root == null) {
 			return new BSTNode<E>(key, null, null);
 		}
@@ -106,7 +98,7 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 		return delete(bst, key);
 	}
 
-	private BSTNode<E> delete(BSTNode<E> root, E key) {
+	private synchronized BSTNode<E> delete(BSTNode<E> root, E key) {
 		if (root == null) {
 			return null;
 		}
@@ -180,5 +172,4 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 		System.out.println(root.getKey());
 		traversal(root.getRight());
 	}
-
 }

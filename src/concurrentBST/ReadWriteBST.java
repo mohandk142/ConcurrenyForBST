@@ -34,8 +34,10 @@ public class ReadWriteBST<E extends Comparable<E>> {
 	    }
 	     
 	    if (n.getKey().equals(key)) {
-	        System.out.println("Duplicate key");
-	        return null;
+	    	n.setLeft( insert(n.getLeft(), key) );
+	        return n;
+	        //System.out.println("Duplicate key");
+	        //return null;
 	    }
 	    
 	    if (key.compareTo(n.getKey()) < 0) {
@@ -124,6 +126,16 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		else{
 			return lookup(n.getRight(), key);
 		}
+	}
+	
+	public void traversal(BSTNode<E> root){
+
+		if(null == root){
+			return;
+		}	
+		traversal(root.getLeft());
+		System.out.println(root.getKey());
+		traversal(root.getRight());
 	}
 	
 	private E smallest(BSTNode<E> n){
