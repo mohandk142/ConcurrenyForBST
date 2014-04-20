@@ -85,50 +85,50 @@ public class Test {
 //		end = System.currentTimeMillis();
 //		System.out.println("RWBST insert time: "+(end-start));
 		
-//		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<>();
-//		Thread[] insertThreadsForHOHBST = new Thread[NUM_THREADS];
-//		
-//		for(int i=0;i<NUM_THREADS;i++){
-//			insertThreadsForHOHBST[i] = new Thread(new runInsertInThreads(buckets.get(i), null, HOHTree, null));
-//		}
-//		start = System.currentTimeMillis();
-//		for(int i=0;i<NUM_THREADS;i++){
-//			insertThreadsForHOHBST[i].start();
-//		}
-//		for(int i=0;i<NUM_THREADS;i++){
-//			try {
-//				insertThreadsForHOHBST[i].join();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println("HOH traversal");
-//		HOHTree.traversal(HOHTree.getRoot());
-//		end = System.currentTimeMillis();
-//		System.out.println("HOH insert time: "+(end-start));
-//		
-//
-		CopyOnWriteBST<Integer> COWTree = new CopyOnWriteBST<>();
-		Thread[] insertThreadsForCOW = new Thread[NUM_THREADS];
+		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<>();
+		Thread[] insertThreadsForHOHBST = new Thread[NUM_THREADS];
 		
 		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(buckets.get(i), COWTree, null, null));
+			insertThreadsForHOHBST[i] = new Thread(new runInsertInThreads(buckets.get(i), null, HOHTree, null));
 		}
 		start = System.currentTimeMillis();
 		for(int i=0;i<NUM_THREADS;i++){
-			insertThreadsForCOW[i].start();
+			insertThreadsForHOHBST[i].start();
 		}
 		for(int i=0;i<NUM_THREADS;i++){
 			try {
-				insertThreadsForCOW[i].join();
+				insertThreadsForHOHBST[i].join();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("COW traversal");
-		COWTree.traversal(COWTree.getRoot());
+		System.out.println("HOH traversal");
+		HOHTree.traversal(HOHTree.getRoot());
 		end = System.currentTimeMillis();
-		System.out.println("COW insert time: "+(end-start));
+		System.out.println("HOH insert time: "+(end-start));
+		
+
+//		CopyOnWriteBST<Integer> COWTree = new CopyOnWriteBST<>();
+//		Thread[] insertThreadsForCOW = new Thread[NUM_THREADS];
+//		
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(buckets.get(i), COWTree, null, null));
+//		}
+//		start = System.currentTimeMillis();
+//		for(int i=0;i<NUM_THREADS;i++){
+//			insertThreadsForCOW[i].start();
+//		}
+//		for(int i=0;i<NUM_THREADS;i++){
+//			try {
+//				insertThreadsForCOW[i].join();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println("COW traversal");
+//		COWTree.traversal(COWTree.getRoot());
+//		end = System.currentTimeMillis();
+//		System.out.println("COW insert time: "+(end-start));
 		
 		
 		

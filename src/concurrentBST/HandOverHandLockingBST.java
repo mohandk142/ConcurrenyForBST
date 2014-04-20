@@ -24,6 +24,7 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 	}
 
 	public boolean insert(E data) {
+		//System.out.println("in insert "+data);
 		BSTLockNode<E> newNode = new BSTLockNode<E>(data, null, null);
 		BSTLockNode<E> parentNode = null;
 		BSTLockNode<E> currentNode = null;
@@ -44,8 +45,9 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 				} else if(compare < 0) {
 					currentNode = currentNode.getRight();
 				} else {
-					currentNode.unlock();
-					return false;
+					currentNode = currentNode.getLeft();
+//					currentNode.unlock();
+//					return false;
 				}
 
 				if(currentNode == null) {
@@ -59,10 +61,13 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 			//Insert the node into the tree
 			if(compare > 0)
 				parentNode.setLeft(newNode);
-			else
+			else if(compare < 0)
 				parentNode.setRight(newNode);
+			else
+				parentNode.setLeft(newNode);
 			parentNode.unlock();
 		}
+		//System.out.println(data);
 		return true;
 	}
 
