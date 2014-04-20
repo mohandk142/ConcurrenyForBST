@@ -5,6 +5,12 @@ public class BSTNode<E> {
 	private E key;
 	private BSTNode<E> left, right;
 	
+	public BSTNode(E key){
+		this.key = key;
+		this.left = null;
+		this.right = null;
+	}
+	
 	public BSTNode(E key, BSTNode<E> left, BSTNode<E> right){
 		this.key = key;
 		this.left = left;
