@@ -20,6 +20,7 @@ public class runInsertInThreads implements Runnable{
 	public void run(){
 		
 		for(int i = 0; i<arr.size(); i++){
+			
 			if(rwTree != null)
 				rwTree.insert(arr.get(i));
 			if(COWTree != null)

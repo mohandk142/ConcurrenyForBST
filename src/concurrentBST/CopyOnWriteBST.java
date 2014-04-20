@@ -66,12 +66,12 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 				q.add(curr.getRight());
 			}
 		}
-		
+
 		return hm.get(root);
 	}
 
 	public synchronized void insert(E key) {
-		
+
 		bst = insert(CopyTree(bst), key);
 		return;
 	}
@@ -80,19 +80,19 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 	    if (n == null) {
 	        return new BSTNode<E>(key, null, null);
 	    }
-	     
+
 	    if (n.getKey().equals(key)) {
 	    	n.setLeft( insert(n.getLeft(), key) );
 	        return n;
 	        //System.out.println("Duplicate key");
 	        //return null;
 	    }
-	    
+
 	    if (key.compareTo(n.getKey()) < 0) {
 	        n.setLeft( insert(n.getLeft(), key) );
 	        return n;
 	    }
-	    
+
 	    else {
 	        n.setRight( insert(n.getRight(), key) );
 	        return n;
