@@ -109,13 +109,17 @@ public class ParallelDepthFirstSearch {
 		
 	}
 	
+	public void printSeqDFT(ArrayList<Object> traverseArr){
+		for(int j = 0; j<traverseArr.size(); j++){
+			System.out.print(traverseArr.get(j) + "\t");
+		}
+	}
+	
 	public void ConcurrentTraverse(BSTNode root){
 		if(numProcs < 2){
 			ArrayList<Object> traverseArr = new ArrayList<Object>(1);
 			sequentialTraverse(root, traverseArr);
-			for(int j = 0; j<traverseArr.size(); j++){
-				System.out.print(traverseArr.get(j) + "\t");
-			}
+			printSeqDFT(traverseArr);
 		}
 
 		else{
@@ -148,7 +152,7 @@ public class ParallelDepthFirstSearch {
 				}
 
 			}			
-			//printDFT(arr);
+			printDFT(arr);
 		}	
 	}
 }
