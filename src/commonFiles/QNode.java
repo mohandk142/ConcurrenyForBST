@@ -5,7 +5,7 @@ public class QNode {
 	private BSTNode<Object> node;
 	private int availableProcs;
 	
-	public QNode(BSTNode<Object> node, int availableProcs){
+	public QNode(BSTNode node, int availableProcs){
 		this.node = node;
 		this.availableProcs = availableProcs;
 	}
@@ -18,7 +18,7 @@ public class QNode {
 		return node;
 	}
 	
-	public void setNode(BSTNode<Object> newNode){
+	public void setNode(BSTNode newNode){
 		node = newNode;
 	}
 	
