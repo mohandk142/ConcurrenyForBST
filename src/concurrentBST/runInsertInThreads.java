@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class runInsertInThreads implements Runnable{
 	
-	ArrayList<Integer> arr = new ArrayList<>();
+	ArrayList<Integer> arr = new ArrayList<Integer>();
 	ReadWriteBST<Integer> rwTree;
 	HandOverHandLockingBST<Integer> HOHTree;
 	CopyOnWriteBST<Integer> COWTree;
@@ -20,7 +20,6 @@ public class runInsertInThreads implements Runnable{
 	public void run(){
 		
 		for(int i = 0; i<arr.size(); i++){
-			
 			if(rwTree != null)
 				rwTree.insert(arr.get(i));
 			if(COWTree != null)

@@ -8,7 +8,7 @@ import commonFiles.BSTNode;
 
 public class CopyOnWriteBST<E extends Comparable<E>> {
 
-	private final BSTNode<E> bst;
+	private BSTNode<E> bst;
 
 	public CopyOnWriteBST() {
 		bst = null;
@@ -29,7 +29,7 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 		return bst;
 	}
 
-	public BSTNode CopyTree(BSTNode root) {
+	public synchronized BSTNode CopyTree(BSTNode root) {
 		if (root == null)
 			return null;
 		BSTNode newRoot = null;
@@ -66,15 +66,17 @@ public class CopyOnWriteBST<E extends Comparable<E>> {
 				q.add(curr.getRight());
 			}
 		}
+		
 		return hm.get(root);
 	}
 
-	public BSTNode<E> insert(E key) {
+	public synchronized void insert(E key) {
 		
-		return insert(CopyTree(bst), key);
+		bst = insert(CopyTree(bst), key);
+		return;
 	}
 
-	private BSTNode<E> insert(BSTNode<E> n, E key) {
+	private synchronized BSTNode<E> insert(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return new BSTNode<E>(key, null, null);
 	    }

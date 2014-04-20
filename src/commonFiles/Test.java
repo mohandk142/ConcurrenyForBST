@@ -7,7 +7,7 @@ import nonConcurrentBST.*;
 public class Test {
 
 	public static void main(String[] args) {
-		final int maxRange = Integer.parseInt(args[0])+1;
+		final int maxRange = 10;
 		final int minRange = 1;
 		//NonConcurrentBST<Integer> tree = new NonConcurrentBST<Integer>();
 
@@ -32,6 +32,7 @@ public class Test {
 /**************************************** Operations test ***************************************************/
 				
 		int NUM_THREADS = Runtime.getRuntime().availableProcessors();
+		System.out.println("Number of Threads "+NUM_THREADS);
 		long start, end;
 		int totalNumber = maxRange-minRange;
 		System.out.println("total number "+totalNumber);
@@ -48,17 +49,17 @@ public class Test {
 			buckets.get(i%NUM_THREADS).add(minRange+(int)(Math.random()*maxRange));
 		}
 	
-		NonConcurrentBST<Integer> ncbst = new NonConcurrentBST<>();
+		NonConcurrentBST<Integer> ncbst = new NonConcurrentBST<Integer>();
 		start = System.currentTimeMillis();
 		for(int i = 0; i<randomArr.length; i++){
 			ncbst.insert(randomArr[i]);
 		}
-//		System.out.println("NCBST traversal");
-//		ncbst.traversal(ncbst.getRoot());
+		System.out.println("NCBST traversal");
+		ncbst.traversal(ncbst.getRoot());
 		end = System.currentTimeMillis();
 		System.out.println("NCBST insert time: "+(end-start));
 		
-		ReadWriteBST<Integer> rwTree = new ReadWriteBST<>();
+		ReadWriteBST<Integer> rwTree = new ReadWriteBST<Integer>();
 		Thread[] insertThreadsForRWBST = new Thread[NUM_THREADS];
 		//int offset = (int)Math.ceil(totalNumber/NUM_THREADS);
 		for(int i=0;i<NUM_THREADS;i++){
@@ -76,12 +77,13 @@ public class Test {
 				e.printStackTrace();
 			}
 		}
-//		System.out.println("RWBST traversal");
-//		rwTree.traversal(rwTree.getRoot());
+		System.out.println("RWBST traversal");
+		rwTree.traversal(rwTree.getRoot());
 		end = System.currentTimeMillis();
 		System.out.println("RWBST insert time: "+(end-start));
 		
-		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<>();
+
+		HandOverHandLockingBST<Integer> HOHTree = new HandOverHandLockingBST<Integer>();
 		Thread[] insertThreadsForHOHBST = new Thread[NUM_THREADS];
 		
 		for(int i=0;i<NUM_THREADS;i++){
@@ -98,41 +100,45 @@ public class Test {
 				e.printStackTrace();
 			}
 		}
-//		System.out.println("HOH traversal");
-//		HOHTree.traversal(HOHTree.getRoot());
+		System.out.println("HOH traversal");
+		HOHTree.traversal(HOHTree.getRoot());
 		end = System.currentTimeMillis();
 		System.out.println("HOH insert time: "+(end-start));
 		
 
-//		CopyOnWriteBST<Integer> COWTree = new CopyOnWriteBST<>();
-//		Thread[] insertThreadsForCOW = new Thread[NUM_THREADS];
-//		
-//		for(int i=0;i<NUM_THREADS;i++){
-//			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(buckets.get(i), COWTree, null, null));
-//		}
-//		start = System.currentTimeMillis();
-//		for(int i=0;i<NUM_THREADS;i++){
-//			insertThreadsForCOW[i].start();
-//		}
-//		for(int i=0;i<NUM_THREADS;i++){
-//			try {
-//				insertThreadsForCOW[i].join();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		System.out.println("COW traversal");
-//		COWTree.traversal(COWTree.getRoot());
-//		end = System.currentTimeMillis();
-//		System.out.println("COW insert time: "+(end-start));
+		
+		
+
+		CopyOnWriteBST<Integer> COWTree = new CopyOnWriteBST<Integer>();
+		Thread[] insertThreadsForCOW = new Thread[NUM_THREADS];
+		int number_of_threads_to_initialize = NUM_THREADS>totalNumber?totalNumber:NUM_THREADS;
+		for(int i=0;i<number_of_threads_to_initialize;i++){
+			insertThreadsForCOW[i] = new Thread(new runInsertInThreads(buckets.get(i), COWTree, null, null));
+		}
+		
+		start = System.currentTimeMillis();
+		for(int i=0;i<number_of_threads_to_initialize;i++){
+			insertThreadsForCOW[i].start();
+		}
+		for(int i=0;i<number_of_threads_to_initialize;i++){
+			try {
+				insertThreadsForCOW[i].join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("COW traversal");
+		COWTree.traversal(COWTree.getRoot());
+		end = System.currentTimeMillis();
+		System.out.println("COW insert time: "+(end-start));
 		
 		
 		
 		
 /**************************************** DFT Performance Test **********************************************/
 
-		TestNonConcurrentBST(ncbst);
-		TestConcurrentDFBST(ncbst);
+//		TestNonConcurrentBST(ncbst);
+//		TestConcurrentDFBST(ncbst);
 		
 	}
 
