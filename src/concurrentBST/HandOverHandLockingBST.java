@@ -5,26 +5,47 @@ import java.util.concurrent.locks.ReentrantLock;
 import commonFiles.BSTLockNode;
 import commonFiles.BSTNode;
 
+/**
+ * HandOverHandLockingBST implements hand over hand locking pattern on the binary search tree
+ * this class has root of the tree as a field
+ * @param <E>
+ */
 public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 
 	BSTLockNode<E> root;
+	
+	/**
+	 * Getter for the root of the Tree
+	 * @return
+	 */
 	public BSTLockNode<E> getRoot() {
 		return root;
 	}
 
+	/**
+	 * setter for root of the tree
+	 * @param root
+	 */
 	public void setRoot(BSTLockNode<E> root) {
 		this.root = root;
 	}
 
 	ReentrantLock headLock;
 
+	/**
+	 * Constructor for the HandOverHandLockingBST
+	 */
 	public HandOverHandLockingBST() {
 		root = null;
 		headLock = new ReentrantLock();
 	}
 
+	/**
+	 * Method to insert data into the tree
+	 * @param data
+	 * @return
+	 */
 	public boolean insert(E data) {
-		//System.out.println("in insert "+data);
 		BSTLockNode<E> newNode = new BSTLockNode<E>(data, null, null);
 		BSTLockNode<E> parentNode = null;
 		BSTLockNode<E> currentNode = null;
@@ -46,8 +67,6 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 					currentNode = currentNode.getRight();
 				} else {
 					currentNode = currentNode.getLeft();
-//					currentNode.unlock();
-//					return false;
 				}
 				
 				if(currentNode == null) {
@@ -57,7 +76,6 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 					parentNode.unlock();
 				}
 			}
-			//Insert the node into the tree
 			if(compare > 0)
 				parentNode.setLeft(newNode);
 			else if(compare < 0)
@@ -66,10 +84,14 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 				parentNode.setLeft(newNode);
 			parentNode.unlock();
 		}
-		//System.out.println(data);
 		return true;
 	}
 
+	/**
+	 * Method to lookup data in the HandOverHandLocking BinarySearchTree
+	 * @param data
+	 * @return
+	 */
 	public boolean lookUp(E data){
 		BSTLockNode<E> curNode = null;
 		BSTLockNode<E> parentNode = null;
@@ -77,7 +99,6 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 
 		headLock.lock();
 		if(root != null) {
-			//The tree is not empty, search the tree for the passed data
 			curNode = root;
 			curNode.lock();
 			headLock.unlock();
@@ -108,6 +129,11 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 		return false;
 	}
 	
+	/**
+	 * Deletes data from the HandOverHandLocking BinarySearchTree
+	 * @param data
+	 * @return
+	 */
 	public E delete(E data) {
 
 		BSTLockNode<E> curNode = null;
@@ -117,22 +143,17 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 
 		headLock.lock();
 		if(root != null) {
-			//Tree is not empty, search for the passed data.  Start by checking
-			//the root separately.
 			curNode = root;
 			parentNode = curNode;
 			curNode.lock();
 			compare = curNode.getKey().compareTo(data);
 			if(compare > 0) {
-				//root is "bigger" than passed data, search the left subtree
 				curNode = curNode.getLeft();
 				oldCompare = compare;
 			} else if(compare < 0) {
-				//root is "smaller" than passed data, search the right subtree
 				curNode = curNode.getRight();
 				oldCompare = compare;
 			} else {
-				//Found the specified data, remove it from the tree
 				BSTLockNode<E> replacement = findReplacement(curNode);
 
 				root = replacement;
@@ -146,6 +167,10 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 				headLock.unlock();
 				return curNode.getKey();
 			}
+			if(curNode==null){
+				return null;
+			}
+				
 			curNode.lock();
 			headLock.unlock();
 
@@ -168,7 +193,6 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 					else
 						parentNode.setRight(replacement);
 
-					//Replace curNode with replacement
 					if(replacement != null) {
 						replacement.setLeft(curNode.getLeft());
 						replacement.setRight(curNode.getRight());
@@ -186,16 +210,18 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 				}
 			}
 		} else {
-			//Tree is empty
 			headLock.unlock();
 			return null;
 		}
 
-		//The specified data was not in the tree
 		parentNode.unlock();
 		return null;
 	}
 	
+	/**
+	 * Method for the traversing the HandOverHandLocking Binary search tree
+	 * @param root
+	 */
 	public void traversal(BSTLockNode<E> root){
 
 		if(null == root){
@@ -206,6 +232,12 @@ public class HandOverHandLockingBST<E extends Comparable<? super E>> {
 		traversal(root.getRight());
 	}
 
+	/**
+	 * findReplacement is a helper function used in the delete operation to find the replacement
+	 * for the deleted element
+	 * @param subRoot
+	 * @return
+	 */
 	private BSTLockNode<E> findReplacement(BSTLockNode<E> subRoot) {
 		BSTLockNode<E> curNode = null;
 		BSTLockNode<E> parentNode = null;

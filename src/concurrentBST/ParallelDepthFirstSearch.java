@@ -8,6 +8,13 @@ import java.util.Queue;
 
 import commonFiles.*;
 
+/**
+ * Parallel Implementation of the Binary Search Tree traversal
+ * In this implementation we use 2 queues.One to track the parent Nodes and another to track
+ * child nodes.
+ * numprocs field is used to track the number of processors available for usage
+ *
+ */
 public class ParallelDepthFirstSearch {
 
 	Queue<QNode> parentQueue = new LinkedList<QNode>();
@@ -15,6 +22,11 @@ public class ParallelDepthFirstSearch {
 
 	int numProcs = Runtime.getRuntime().availableProcessors(); 
 
+	/**
+	 * Implementation of the Sequential Traversal of the binary search tree 
+	 * @param root
+	 * @param traverseArr
+	 */
 	public static void sequentialTraverse(BSTNode root, ArrayList traverseArr){
 
 		if(null == root){
@@ -25,6 +37,11 @@ public class ParallelDepthFirstSearch {
 		sequentialTraverse(root.getRight(), traverseArr);
 	}
 
+	/**
+	 * prepareQueue method initializes the parent and child queues by adding nodes
+	 * until the numprocs of child queue nodes become 1.
+	 * @param n
+	 */
 	public void prepareQueue(QNode n){
 
 		QNode leftChild;
@@ -53,8 +70,7 @@ public class ParallelDepthFirstSearch {
 				rightChild = new QNode(n.getNode().getRight(), numProcs);
 
 				childQueue.add(rightChild);
-				//System.out.println("childq "+childQueue.element().getNode().getKey());
-
+				
 				prepareQueue(childQueue.element());
 
 			}
@@ -74,13 +90,14 @@ public class ParallelDepthFirstSearch {
 		else{
 			childQueue.remove();
 			parentQueue.add(n);
-			/*if(childQueue.element().getProcs() >1){
-				childQueue.remove();
-			}
-			childQueue.add(new QNode(n.getNode(), 1));*/
+			
 		}
 	}
 	
+	/**
+	 * printDFT prints pre order of the Binary Search Tree after the Parallel Depth Search Traversal
+	 * @param arr
+	 */
 	public void printDFT(ArrayList<ArrayList<Object>> arr){
 		
 		int i = 0;
@@ -109,12 +126,21 @@ public class ParallelDepthFirstSearch {
 		
 	}
 	
+	/**
+	 * printSeqDFT prints the sequential Depth first traversal of the binary search tree
+	 * @param traverseArr
+	 */
 	public void printSeqDFT(ArrayList<Object> traverseArr){
 		for(int j = 0; j<traverseArr.size(); j++){
 			System.out.print(traverseArr.get(j) + "\t");
 		}
 	}
 	
+	/**
+	 * ConcurrentTraverse traverses the Binary Search Tree in a Depth First fashion parllely 
+	 * 
+	 * @param root
+	 */
 	public void ConcurrentTraverse(BSTNode root){
 		if(numProcs < 2){
 			ArrayList<Object> traverseArr = new ArrayList<Object>(1);
@@ -152,7 +178,6 @@ public class ParallelDepthFirstSearch {
 				}
 
 			}			
-			//printDFT(arr);
 		}	
 	}
 }

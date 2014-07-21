@@ -2,26 +2,52 @@ package nonConcurrentBST;
 
 import commonFiles.BSTNode;
 
+/**
+ * NonConcurrentBST represents nonconcurrent version of the Binary Search Tree
+ *
+ * @param <E>
+ */
 public class NonConcurrentBST<E extends Comparable<E>> {
 	
 	private BSTNode<E> root;
 	
+	/**
+	 * Constructor for the NonConcurrentBST
+	 */
 	public NonConcurrentBST(){
 		root = null;
 	}
 	
+	/**
+	 * Getter for root
+	 * @return
+	 */
 	public BSTNode<E> getRoot() {
 		return root;
 	}
 
+	/**
+	 * Setter for root
+	 * @param root
+	 */
 	public void setRoot(BSTNode<E> root) {
 		this.root = root;
 	}
 
+	/**
+	 * insert method to insert key into the tree
+	 * @param key
+	 */
 	public void insert(E key){
 		root = insert(root, key);
 	}
 	
+	/**
+	 * insert method to insert key into the BST provided as an argument
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private BSTNode<E> insert(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return new BSTNode<E>(key, null, null);
@@ -30,8 +56,6 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 	    if (n.getKey().equals(key)) {
 	    	n.setLeft( insert(n.getLeft(), key) );
 	        return n;
-//	        System.out.println("Duplicate key");
-//	        return null;
 	    }
 	    
 	    if (key.compareTo(n.getKey()) < 0) {
@@ -45,10 +69,20 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 	    }
 	}
 	
+	/**
+	 * Delete method to remove a key from the NonConcurrentBST
+	 * @param key
+	 */
 	public void delete(E key){
 		root = delete(root, key);
 	}
 	
+	/**
+	 * Delete method to remove the key from the BST provided as an argument
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private BSTNode<E> delete(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return null;
@@ -83,10 +117,22 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 	    }
 	}
 	
+	/**
+	 * Method to lookup a key in the NonConcurrent BST
+	 * @param key
+	 * @return
+	 */
 	public boolean lookup(E key){
 		return lookup(root, key);		
 	}
 	
+	/**
+	 * Method to lookup a key in the NonConcurrent BST provided as an argument
+	 * to this method
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private boolean lookup(BSTNode<E> n, E key){
 		if(n == null){
 			return false;
@@ -105,6 +151,10 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * Traversal method implements inorder traversal of the nonconcurrent Binary Search Tree
+	 * @param root
+	 */
 	public void traversal(BSTNode<E> root){
 
 		if(null == root){
@@ -115,6 +165,11 @@ public class NonConcurrentBST<E extends Comparable<E>> {
 		traversal(root.getRight());
 	}
 	
+	/**
+	 * Method to find the Smallest in the nonconcurrent Binary Search Tree
+	 * @param n
+	 * @return
+	 */
 	private E smallest(BSTNode<E> n){
 		
 	    if (n.getLeft() == null) {

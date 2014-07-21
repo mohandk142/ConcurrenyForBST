@@ -5,14 +5,28 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import commonFiles.BSTNode;
 
+/**
+ * ReadWriteBST implements ReadWrite pattern for the Binary Search tree
+ * In this implementation we use java reentrant read write locks.
+ *
+ * @param <E>
+ */
 public class ReadWriteBST<E extends Comparable<E>> {
 	
 	private BSTNode<E> root;
 	
+	/**
+	 * getter for the Root
+	 * @return
+	 */
 	public BSTNode<E> getRoot() {
 		return root;
 	}
 
+	/**
+	 * setter for the root
+	 * @param root
+	 */
 	public void setRoot(BSTNode<E> root) {
 		this.root = root;
 	}
@@ -21,10 +35,17 @@ public class ReadWriteBST<E extends Comparable<E>> {
 	private final Lock read  = readWriteLock.readLock();
 	private final Lock write = readWriteLock.writeLock();
 	
+	/**
+	 * Constructor for the ReadWriteBST
+	 */
 	public ReadWriteBST(){
 		root = null;
 	}
 	
+	/**
+	 * insert method to insert a key into the BST
+	 * @param key
+	 */
 	public void insert(E key){
 		write.lock();
 		try{
@@ -36,6 +57,12 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		}		
 	}
 	
+	/**
+	 * Insert method to insert a key into the BST provided as an argument
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private BSTNode<E> insert(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return new BSTNode<E>(key, null, null);
@@ -59,6 +86,10 @@ public class ReadWriteBST<E extends Comparable<E>> {
 	    }
 	}
 	
+	/**
+	 * Delete method removes a key from the ReadWrite Binary Search Tree
+	 * @param key
+	 */
 	public void delete(E key){
 		write.lock();
 		try{
@@ -70,6 +101,12 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		}			
 	}
 	
+	/**
+	 * Delete method removes a key from the BST given as an argument
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private BSTNode<E> delete(BSTNode<E> n, E key) {
 	    if (n == null) {
 	        return null;
@@ -104,6 +141,11 @@ public class ReadWriteBST<E extends Comparable<E>> {
 	    }
 	}
 	
+	/**
+	 * Lookup operation to search for key in the BST
+	 * @param key
+	 * @return
+	 */
 	public boolean lookup(E key){
 		
 		boolean var = false;
@@ -118,6 +160,12 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		return var;
 	}
 	
+	/**
+	 * Lookup method for searching the key in the BST provided as an argument
+	 * @param n
+	 * @param key
+	 * @return
+	 */
 	private boolean lookup(BSTNode<E> n, E key){
 		if(n == null){
 			return false;
@@ -136,6 +184,10 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * Method for the Traversal of Binary Search Tree
+	 * @param root
+	 */
 	public void traversal(BSTNode<E> root){
 
 		if(null == root){
@@ -146,6 +198,11 @@ public class ReadWriteBST<E extends Comparable<E>> {
 		traversal(root.getRight());
 	}
 	
+	/**
+	 * Method to find the smallest in the Binary Search tree
+	 * @param n
+	 * @return
+	 */
 	private E smallest(BSTNode<E> n){
 		
 	    if (n.getLeft() == null) {
